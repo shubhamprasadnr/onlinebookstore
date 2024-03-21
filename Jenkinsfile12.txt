@@ -4,13 +4,13 @@ pipeline {
       stages{
             stage("GIT checkout"){
             steps{
-                 git 'https://github.com/YugeshKumar01/boxfuse-sample-java-war-hello.git'
+                 git 'https://github.com/shubhamprasadnr/onlinebookstore.git'
               }
             }
             stage("build"){
                   steps{
                        sh "mvn clean package"
-                       sh "mv target/*.war target/boxfuse-sample-java-war-hello.war"
+                       sh "mv target/*.war target/onlinebookstore.war"
                       }
                        
             }
@@ -18,13 +18,13 @@ pipeline {
                   steps{
                      
                        
-                       sshagent(['tomcat123']) {
+                       sshagent(['tomcat3']) {
                        
                        sh """
-                            scp -o StrictHostKeyChecking=no  target/boxfuse-sample-java-war-hello.war ubuntu@13.233.208.75:/home/ubuntu/apache-tomcat-9.0.87/webapps/
+                            scp -o StrictHostKeyChecking=no  target/onlinebookstore.war ubuntu@13.234.118.254:/home/ubuntu/apache-tomcat-9.0.87/webapps/
                             
-                            ssh ubuntu@13.233.208.75 /home/ubuntu/apache-tomcat-9.0.87/bin/shutdown.sh
-                            ssh ubuntu@13.233.208.75 /home/ubuntu/apache-tomcat-9.0.87/bin/startup.sh
+                            ssh ubuntu@13.234.118.254 /home/ubuntu/apache-tomcat-9.0.87/bin/shutdown.sh
+                            ssh ubuntu@13.234.118.254 /home/ubuntu/apache-tomcat-9.0.87/bin/startup.sh
                             
                           """
     
