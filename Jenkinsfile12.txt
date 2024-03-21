@@ -14,7 +14,7 @@ pipeline {
                       }
                        
             }
-             stage("deploy"){
+             stage("deploy-dev"){
                   steps{
                      
                        
@@ -28,9 +28,27 @@ pipeline {
                             
                           """
     
-}
+                           }
                       
                        }
             }
+             stage("deploy-test"){
+                  steps{
+                     
+                       
+                       sshagent(['tomcat3']) {
+                       
+                       sh """
+                            scp -o StrictHostKeyChecking=no  target/onlinebookstore.war ubuntu@13.233.184.234:/home/ubuntu/apache-tomcat-9.0.87/webapps/
+                            
+                            ssh ubuntu@13.233.184.234 /home/ubuntu/apache-tomcat-9.0.87/bin/shutdown.sh
+                            ssh ubuntu@13.233.184.234 /home/ubuntu/apache-tomcat-9.0.87/bin/startup.sh
+                            
+                          """
+    
+                           }
+                      
+                       }
+                }
        }
   }     
