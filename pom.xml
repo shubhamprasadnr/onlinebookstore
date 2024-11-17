@@ -68,6 +68,9 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                         <configuration>
+                            <outputDirectory>${project.build.directory}/custom/jacoco-report</outputDirectory> <!-- Custom path -->
+                         </configuration>
                     </execution>
                 </executions>
             </plugin>
